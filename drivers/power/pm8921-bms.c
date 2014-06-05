@@ -40,7 +40,7 @@
 #include <linux/string.h>
 #include <linux/uaccess.h>
 #include <linux/reboot.h>
-#include <pm8921-charger_oem.h>
+#include "pm8921-charger_oem.h"
 
 #define BMS_CONTROL		0x224
 #define BMS_S1_DELAY		0x225
@@ -3789,7 +3789,6 @@ err_out:
 
 #define EN_BMS_BIT	BIT(7)
 #define EN_PON_HS_BIT	BIT(0)
-#define BMS_OCV_TOLERANCE     0x22D
 static int __devinit pm8921_bms_hw_init(struct pm8921_bms_chip *chip)
 {
 	int rc;
@@ -3804,9 +3803,6 @@ static int __devinit pm8921_bms_hw_init(struct pm8921_bms_chip *chip)
 	/* The charger will call start charge later if usb is present */
 	pm_bms_masked_write(chip, BMS_TOLERANCES,
 				IBAT_TOL_MASK, IBAT_TOL_NOCHG);
-
-	pm_bms_masked_write(chip, BMS_OCV_TOLERANCE,
-					0xFF, 0x14);
 	return 0;
 }
 
